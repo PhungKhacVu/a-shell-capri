@@ -1100,9 +1100,7 @@ func downloadRemoteFileFromCloud(fileURL: URL) {
         try FileManager().startDownloadingUbiquitousItem(at: URL(fileURLWithPath: downloadedFilePath))
         let startingTime = Date()
         // try downloading the file for 5s, then give up:
-        while (!FileManager().fileExists(atPath: fileURL.path) && (Date().timeIntervalSince(startingTime) < 5)) {
-            Thread.sleep(forTimeInterval: 0.1)
-        }
+        while (!FileManager().fileExists(atPath: fileURL.path) && (Date().timeIntervalSince(startingTime) < 5)) { }
     }
     catch {
         NSLog("Could not download file \(downloadedFilePath) from iCloud")
@@ -1200,9 +1198,7 @@ public func downloadRemoteFile(fileURL: URL) -> Bool {
         try FileManager().startDownloadingUbiquitousItem(at: fileURL)
         let startingTime = Date()
         // try downloading the file for 5s, then give up:
-        while (!FileManager().fileExists(atPath: fileURL.path) && (Date().timeIntervalSince(startingTime) < 5)) {
-            Thread.sleep(forTimeInterval: 0.1)
-        }
+        while (!FileManager().fileExists(atPath: fileURL.path) && (Date().timeIntervalSince(startingTime) < 5)) { }
         // TODO: add an alert, ask if user wants to continue
         // NSLog("Done downloading, new status: \(FileManager().fileExists(atPath: fileURL.path))")
         if (FileManager().fileExists(atPath: fileURL.path)) {
