@@ -4433,15 +4433,8 @@ class SceneDelegate: UIViewController, UIWindowSceneDelegate, WKNavigationDelega
                 // I could have been removed by the system, or by the user.
                 // TODO: also check that files are still available / no
                 if (storedCommand.hasPrefix("vim -S ")) {
-                    // We counter it by restoring TERM before starting Vim:
-                    if let storedTermC = getenv("TERM") {
-                        if let storedTerm = String(utf8String: storedTermC) {
-                            if storedTerm == "dumb" {
-                                setenv("TERM", "xterm", 1)
-                            }
-                        }
-                    }
-                    NSLog("Restarting session with \(storedCommand)")
+                    // Safety check: is the vim session file still there?
+                    // I could have been removed by the system, or by the user.
                     var sessionFile = storedCommand
                     sessionFile.removeFirst("vim -S ".count)
                     if (sessionFile.hasPrefix("~")) {
@@ -4454,6 +4447,15 @@ class SceneDelegate: UIViewController, UIWindowSceneDelegate, WKNavigationDelega
                         sessionFile = homeUrl.path + sessionFile
                     }
                     if (FileManager().fileExists(atPath: sessionFile)) {
+                        // We counter it by restoring TERM before starting Vim:
+                        if let storedTermC = getenv("TERM") {
+                            if let storedTerm = String(utf8String: storedTermC) {
+                                if storedTerm == "dumb" {
+                                    setenv("TERM", "xterm", 1)
+                                }
+                            }
+                        }
+                        NSLog("Restarting session with \(storedCommand)")
                         if (UserDefaults.standard.bool(forKey: "restart_vim")) {
                             /* We only restart vim commands, and only if the user asks for it.
                              Everything else is creating problems.
