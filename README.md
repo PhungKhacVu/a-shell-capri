@@ -1,4 +1,4 @@
-# a-shell: A terminal for iOS, with multiple windows
+# a-shell: Một terminal cho iOS, hỗ trợ nhiều cửa sổ
 
 <p align="center">
 <img src="https://img.shields.io/badge/Platform-iOS%2014.0+-lightgrey.svg" alt="Platform: iOS">
@@ -6,82 +6,82 @@
 <a href="https://discord.gg/cvYnZm69Gy"><img src="https://img.shields.io/discord/935519150305050644?color=5865f2&label=Discord&style=flat" alt="Discord"/></a>
 </p>
 
-The goal in this project is to provide a simple Unix-like terminal on iOS. It uses [ios_system](https://github.com/holzschu/ios_system/) for command interpretation, and includes all commands from the [ios_system](https://github.com/holzschu/ios_system/) ecosystem (nslookup, whois, python3, lua, pdflatex, lualatex...) 
+Mục tiêu của dự án này là cung cấp một terminal giống Unix đơn giản trên iOS. Nó sử dụng [ios_system](https://github.com/holzschu/ios_system/) để thông dịch lệnh, và bao gồm tất cả các lệnh từ hệ sinh thái [ios_system](https://github.com/holzschu/ios_system/) (nslookup, whois, python3, lua, pdflatex, lualatex...)
 
-The project uses iPadOS 13 ability to create and manage multiple windows. Each window has its own context, appearance, command history and current directory. `newWindow` opens a new window, `exit` closes the current window. 
+Dự án sử dụng khả năng của iPadOS 13 để tạo và quản lý nhiều cửa sổ. Mỗi cửa sổ có ngữ cảnh, giao diện, lịch sử lệnh và thư mục hiện tại riêng. `newWindow` mở một cửa sổ mới, `exit` đóng cửa sổ hiện tại.
 
-For help, type `help` in the command line. `help -l` lists all the available commands. `help -l | grep command` will tell you if your favorite command is already installed.
+Để được trợ giúp, hãy gõ `help` trong dòng lệnh. `help -l` liệt kê tất cả các lệnh có sẵn. `help -l | grep command` sẽ cho bạn biết liệu lệnh yêu thích của bạn đã được cài đặt chưa.
 
-You can change the appearance of a-Shell using `config`. It lets you change the font, the font size, the background color, the text color and the cursor color and shape. Each window can have its own appearance. `config -p` will make the settings for the current window permanent, that is used for all future windows. With `config -t` you can also configure the toolbar.
+Bạn có thể thay đổi giao diện của a-Shell bằng lệnh `config`. Nó cho phép bạn thay đổi phông chữ, kích thước phông chữ, màu nền, màu văn bản, màu con trỏ và hình dạng con trỏ. Mỗi cửa sổ có thể có giao diện riêng. `config -p` sẽ làm cho các cài đặt của cửa sổ hiện tại trở thành vĩnh viễn, nghĩa là được sử dụng cho tất cả các cửa sổ trong tương lai. Với `config -t`, bạn cũng có thể cấu hình thanh công cụ (toolbar).
 
-When opening a new window, a-Shell executes the file `.profile` if it exists. You can use this mechanism to customize further, e.g. have custom environment variables or cleanup temporary files.
+Khi mở một cửa sổ mới, a-Shell thực thi tệp `.profile` nếu nó tồn tại. Bạn có thể sử dụng cơ chế này để tùy chỉnh thêm, ví dụ: có các biến môi trường tùy chỉnh hoặc dọn dẹp các tệp tạm thời.
 
-For more tips on how to use a-Shell, see <a href="https://bianshen00009.gitbook.io/a-guide-to-a-shell/">the document</a>.
+Để biết thêm mẹo về cách sử dụng a-Shell, hãy xem <a href="https://bianshen00009.gitbook.io/a-guide-to-a-shell/">tài liệu này</a>.
 
 ## AppStore
 
-a-Shell is now <a href="https://holzschu.github.io/a-Shell_iOS/">available on the AppStore</a>.
+a-Shell hiện đã <a href="https://holzschu.github.io/a-Shell_iOS/">có sẵn trên AppStore</a>.
 
-## How to compile it?
+## Cách biên dịch (compile)?
 
-If you want to compile the project yourself, you will need the following steps: 
-* download the entire project and its sub-modules: `git submodule update --init --recursive`
-* download all the xcFrameworks: `downloadFrameworks.sh`
-    * this will download the standard Apple frameworks (in `xcfs/.build/artefacts/xcfs`, with checksum control).
-    * There are too many Python frameworks (more than 2000) for automatic download. You can either remove them from the "Embed" step in the project, or compile them: 
-        * You'll need the Xcode command line tools, if you don't already have them: `sudo xcode-select --install` 
-        * You also need the OpenSSL libraries (libssl and libcrypto), XQuartz (freetype), and Node.js (npm) for macOS (we provide the versions for iOS and simulator).
-        * change directory to `cpython`: `cd cpython`
-        * build Python 3.11 and all the associated libraries / frameworks: `sh ./downloadAndCompile.sh` (this step takes several hours on a 2GHz i5 MBP, YMMV).
+Nếu bạn muốn tự biên dịch dự án, bạn sẽ cần thực hiện các bước sau:
+* tải xuống toàn bộ dự án và các mô-đun con của nó: `git submodule update --init --recursive`
+* tải xuống tất cả các xcFrameworks: `downloadFrameworks.sh`
+    * lệnh này sẽ tải xuống các framework tiêu chuẩn của Apple (trong `xcfs/.build/artefacts/xcfs`, có kiểm tra checksum).
+    * Có quá nhiều framework Python (hơn 2000) để tải xuống tự động. Bạn có thể xóa chúng khỏi bước "Embed" trong dự án, hoặc biên dịch chúng:
+        * Bạn sẽ cần các công cụ dòng lệnh Xcode (Xcode command line tools), nếu bạn chưa có: `sudo xcode-select --install`
+        * Bạn cũng cần các thư viện OpenSSL (libssl và libcrypto), XQuartz (freetype), và Node.js (npm) cho macOS (chúng tôi cung cấp các phiên bản cho iOS và trình giả lập).
+        * chuyển thư mục đến `cpython`: `cd cpython`
+        * build Python 3.11 và tất cả các thư viện / framework liên quan: `sh ./downloadAndCompile.sh` (bước này mất vài giờ trên máy Mac i5 2GHz, thời gian có thể thay đổi tùy máy).
 
-a-Shell now runs on the devices. a-Shell mini can run on the devices and the simulator.
+a-Shell hiện chạy trên các thiết bị thật. a-Shell mini có thể chạy trên các thiết bị thật và trình giả lập.
 
-Because Python 3.x uses functions that are only available on the iOS 14 SDK, I've set the minimum iOS version to 14.0. It also reduces the size of the binaries, so `ios_system` and the other frameworks have the same settings. If you need to run it on an iOS 13 device, you'll have to recompile most frameworks.
+Bởi vì Python 3.x sử dụng các hàm chỉ có sẵn trên SDK iOS 14, tôi đã đặt phiên bản iOS tối thiểu là 14.0. Nó cũng làm giảm kích thước của các tệp nhị phân, vì vậy `ios_system` và các framework khác cũng có cùng cài đặt này. Nếu bạn cần chạy nó trên thiết bị iOS 13, bạn sẽ phải biên dịch lại hầu hết các framework.
 
-## Home directory
+## Thư mục Home
 
- In iOS, you cannot write in the `~` directory, only in `~/Documents/`, `~/Library/` and `~/tmp`. Most Unix programs assume the configuration files are in `$HOME`. 
+Trong iOS, bạn không thể ghi vào thư mục `~`, chỉ có thể ghi vào `~/Documents/`, `~/Library/` và `~/tmp`. Hầu hết các chương trình Unix giả định các tệp cấu hình nằm trong `$HOME`.
 
- So a-Shell changes several environment variables so that they point to `~/Documents`. Type `env` to see them.
+Vì vậy, a-Shell thay đổi một số biến môi trường để chúng trỏ đến `~/Documents`. Gõ `env` để xem chúng.
 
-Most configuration files (Python packages, TeX files, Clang SDK...) are in `~/Library`. 
+Hầu hết các tệp cấu hình (gói Python, tệp TeX, Clang SDK...) đều nằm trong `~/Library`.
 
-## Sandbox and Bookmarks 
+## Sandbox và Bookmarks
 
-a-Shell uses iOS 13 ability to access directories in other Apps sandbox. Type `pickFolder` to access a directory inside another App. Once you have selected a directory, you can do pretty much anything you want here, so be careful. 
+a-Shell sử dụng khả năng của iOS 13 để truy cập các thư mục trong sandbox của Ứng dụng khác. Gõ `pickFolder` để truy cập một thư mục bên trong Ứng dụng khác. Khi bạn đã chọn một thư mục, bạn có thể làm khá nhiều thứ bạn muốn ở đây, vì vậy hãy cẩn thận.
 
-All the directories you access with `pickFolder` are bookmarked, so you can return to them later without `pickFolder`. You can also bookmark the current directory with `bookmark`. `showmarks` will list all the existing bookmarks, `jump mark` and `cd ~mark` will change the current directory to this specific bookmark, `renamemark` will let you change the name of a specific bookmark and `deletemark` will delete a bookmark. 
+Tất cả các thư mục bạn truy cập bằng `pickFolder` đều được đánh dấu (bookmarked), vì vậy bạn có thể quay lại chúng sau mà không cần `pickFolder`. Bạn cũng có thể đánh dấu thư mục hiện tại bằng `bookmark`. `showmarks` sẽ liệt kê tất cả các dấu trang hiện có, `jump mark` và `cd ~mark` sẽ thay đổi thư mục hiện tại thành dấu trang cụ thể này, `renamemark` sẽ cho phép bạn đổi tên một dấu trang cụ thể và `deletemark` sẽ xóa một dấu trang.
 
-A user-configurable option in Settings lets you use the commands `s`, `g`, `l`, `r` and `d` instead or as well. 
+Một tùy chọn có thể định cấu hình bởi người dùng trong Cài đặt cho phép bạn sử dụng các lệnh `s`, `g`, `l`, `r` và `d` thay thế hoặc bổ sung.
 
-If you are lost, `cd` will always bring you back to `~/Documents/`. `cd -` will change to the previous directory. 
+Nếu bạn bị lạc, `cd` sẽ luôn đưa bạn trở lại `~/Documents/`. `cd -` sẽ chuyển sang thư mục trước đó.
 
-## Shortcuts
+## Shortcuts (Phím tắt)
 
-a-Shell is compatible with Apple Shortcuts, giving users full control of the Shell. You can write complex Shortcuts to download, process and release files using a-Shell commands. There are three shortcuts: 
-- `Execute Command`, which takes a list of commands and executes them in order. The input can also be a file or a text node, in which case the commands inside the node are executed. 
-- `Put File` and `Get File` are used to transfer files to and from a-Shell. 
+a-Shell tương thích với Apple Shortcuts, cho phép người dùng kiểm soát hoàn toàn Shell. Bạn có thể viết các Shortcuts phức tạp để tải xuống, xử lý và giải phóng các tệp bằng các lệnh a-Shell. Có ba loại shortcut:
+- `Execute Command` (Thực thi lệnh), nhận danh sách các lệnh và thực thi chúng theo thứ tự. Đầu vào cũng có thể là một tệp hoặc một nút văn bản, trong trường hợp đó các lệnh bên trong nút sẽ được thực thi.
+- `Put File` (Đặt tệp) và `Get File` (Lấy tệp) được sử dụng để chuyển tệp đến và đi từ a-Shell.
 
-Shortcuts can be executed either "In Extension" or "In App". "In Extension" means the shortcut runs in a lightweight version of the App, without no graphical user interface. It is good for light commands that do not require configuration files or system libraries (mkdir, nslookup, whois, touch, cat, echo...). "In App" opens the main application to execute the shortcut. It has access to all the commands, but will take longer. Once a shortcut has opened the App, you can return to the Shortcuts app by calling the command `open shortcuts://`. The default behaviour is to try to run the commands "in Extension" as much as possible, based on the content of the commands. You can force a specific shortcut to run "in App" or "in Extension", with the warning that it won't always work. 
+Shortcuts có thể được thực thi "Trong Tiện ích mở rộng" (In Extension) hoặc "Trong Ứng dụng" (In App). "Trong Tiện ích mở rộng" có nghĩa là shortcut chạy trong một phiên bản nhẹ của Ứng dụng, không có giao diện người dùng đồ họa. Nó tốt cho các lệnh nhẹ không yêu cầu tệp cấu hình hoặc thư viện hệ thống (mkdir, nslookup, whois, touch, cat, echo...). "Trong Ứng dụng" mở ứng dụng chính để thực thi shortcut. Nó có quyền truy cập vào tất cả các lệnh, nhưng sẽ mất nhiều thời gian hơn. Khi một shortcut đã mở Ứng dụng, bạn có thể quay lại ứng dụng Shortcuts bằng cách gọi lệnh `open shortcuts://`. Hành vi mặc định là cố gắng chạy các lệnh "trong Tiện ích mở rộng" càng nhiều càng tốt, dựa trên nội dung của các lệnh. Bạn có thể buộc một shortcut cụ thể chạy "trong Ứng dụng" hoặc "trong Tiện ích mở rộng", với cảnh báo rằng nó không phải lúc nào cũng hoạt động.
 
-Both kind of shortcuts run by default in the same specific directory, `$SHORTCUTS` or `~shortcuts`. Of course, since you can run the commands `cd` and `jump` in a shortcut, you can pretty much go anywhere.
+Cả hai loại shortcut đều chạy mặc định trong cùng một thư mục cụ thể, `$SHORTCUTS` hoặc `~shortcuts`. Tất nhiên, vì bạn có thể chạy các lệnh `cd` và `jump` trong một shortcut, bạn có thể đi đến bất cứ đâu.
 
-## Programming / add more commands:
+## Lập trình / thêm nhiều lệnh hơn:
 
-a-Shell has several programming languages installed: Python, Lua, JS, C, C++ and TeX. 
+a-Shell có một số ngôn ngữ lập trình được cài đặt sẵn: Python, Lua, JS, C, C++ và TeX.
 
-For C and C++, you compile your programs with `clang program.c` and it produces a webAssembly file. You can then execute it with either `wasm a.out` or `a.out`. You can also link multiple object files together, make a static library with `ar`, etc. Once you are satisfied with your program, if you move it to a directory in the `$PATH` (e.g. `~/Documents/bin`), it will be executed if you type `program` on the command line. 
+Đối với C và C++, bạn biên dịch các chương trình của mình bằng `clang program.c` và nó tạo ra một tệp webAssembly. Sau đó, bạn có thể thực thi nó bằng `wasm a.out` hoặc `a.out`. Bạn cũng có thể liên kết nhiều tệp đối tượng (object files) lại với nhau, tạo thư viện tĩnh bằng `ar`, v.v. Khi bạn hài lòng với chương trình của mình, nếu bạn di chuyển nó đến một thư mục trong `$PATH` (ví dụ: `~/Documents/bin`), nó sẽ được thực thi nếu bạn gõ `program` trên dòng lệnh.
 
-You can also cross-compile programs on your main computer using our specific [WASI-sdk](https://github.com/holzschu/wasi-sdk), and transfer the WebAssembly file to your iPad or iPhone. 
+Bạn cũng có thể biên dịch chéo (cross-compile) các chương trình trên máy tính chính của mình bằng [WASI-sdk](https://github.com/holzschu/wasi-sdk) đặc biệt của chúng tôi và chuyển tệp WebAssembly sang iPad hoặc iPhone của bạn.
 
-Precompiled WebAssembly commands specific for a-Shell are available here: https://github.com/holzschu/a-Shell-commands These include `zip`, `unzip`, `xz`, `ffmpeg`... You install them on your iPad using the `pkg` command: `pkg install zip`.
+Các lệnh WebAssembly được biên dịch sẵn dành riêng cho a-Shell có sẵn tại đây: https://github.com/holzschu/a-Shell-commands Chúng bao gồm `zip`, `unzip`, `xz`, `ffmpeg`... Bạn cài đặt chúng trên iPad của mình bằng lệnh `pkg`: `pkg install zip`.
 
-We have the limitations of WebAssembly: no sockets, no forks (we do have interactive user input, now). Piping input from other commands with `command | wasm program.wasm` works fine. 
+Chúng tôi có những hạn chế của WebAssembly: không có socket, không có fork (hiện tại chúng tôi đã có đầu vào người dùng tương tác). Việc truyền đầu vào từ các lệnh khác bằng `command | wasm program.wasm` hoạt động tốt.
 
-For Python, you can install more packages with `pip install packagename`, but only if they are pure Python. The C compiler is not yet able to produce dynamic libraries that could be used by Python. 
+Đối với Python, bạn có thể cài đặt thêm các gói bằng `pip install packagename`, nhưng chỉ khi chúng là thuần Python (pure Python). Trình biên dịch C chưa thể tạo ra các thư viện động có thể được sử dụng bởi Python.
 
-TeX files are not installed by default. Type any TeX command and the system will prompt you to download them. Same with LuaTeX files. 
+Các tệp TeX không được cài đặt theo mặc định. Gõ bất kỳ lệnh TeX nào và hệ thống sẽ nhắc bạn tải xuống chúng. Tương tự với các tệp LuaTeX.
 
 ## VoiceOver
 
-If you enable VoiceOver in Settings, a-Shell will work with VoiceOver: reading commands as you type them, reading the result, letting you read the screen with your finger...
+Nếu bạn bật VoiceOver trong Cài đặt, a-Shell sẽ hoạt động với VoiceOver: đọc các lệnh khi bạn gõ chúng, đọc kết quả, cho phép bạn đọc màn hình bằng ngón tay...
