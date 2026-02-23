@@ -1,0 +1,58 @@
+name: Copilot Setup Steps
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**/*.pl'
+      - '**/*.pm'
+      - '**/*.py'
+      - '**/Makefile'
+      - '**/*.c'
+      - '**/*.cpp'
+      - '**/*.h'
+      - '.github/workflows/copilot-setup-steps.yml'
+  pull_request:
+    paths:
+      - '**/*.pl'
+      - '**/*.pm'
+      - '**/*.py'
+      - '**/Makefile'
+      - '**/*.c'
+      - '**/*.cpp'
+      - '**/*.h'
+      - '.github/workflows/copilot-setup-steps.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tools and interpreters
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y build-essential perl python3
+
+      - name: Perl syntax check
+        run: |
+          find . -not -path '*/node_modules/*' \( -name '*.pl' -o -name '*.pm' \) -print0 | \
+            xargs -0 -n 1 -P "$(nproc)" perl -c 2>&1 || true
+        continue-on-error: true
+
+      - name: Python compile check
+        run: |
+          find . -not -path '*/node_modules/*' -not -path '*/__pycache__/*' \
+            -not -path '*/venv/*' -not -path '*/.tox/*' \
+            -name '*.py' -print0 | \
+            xargs -0 python3 -m py_compile 2>&1 || true
+        continue-on-error: true
+
+      - name: Build with make (best-effort)
+        if: hashFiles('Makefile') != ''
+        run: make -j$(nproc) || true
+        continue-on-error: true
