@@ -31,7 +31,13 @@ var screenHeight: CGFloat {
 }
 var screenOrientation: UIInterfaceOrientation {
     // TODO: use the interfaceOrientation property of the window scene
-    return UIApplication.shared.statusBarOrientation
+    if let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+        return windowScene.interfaceOrientation
+    }
+    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+        return windowScene.interfaceOrientation
+    }
+    return .unknown
 }
 
 var selectorActive = false // if we are inside a picker (roll-up  menu), change the toolbar
