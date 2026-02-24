@@ -93,6 +93,7 @@ class SceneDelegate: UIViewController, UIWindowSceneDelegate, WKNavigationDelega
     var windowHistory = ""
     var pid: pid_t = 0
     private var selectedDirectory = ""
+    private var pickerSemaphore: DispatchSemaphore?
     private var selectedFont = ""
     // Store these for session restore:
     var currentDirectory = ""
@@ -2009,6 +2010,7 @@ class SceneDelegate: UIViewController, UIWindowSceneDelegate, WKNavigationDelega
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         selectedDirectory = "cancelled"
+        pickerSemaphore?.signal()
     }
     
     func pickFolder() {
@@ -2021,10 +2023,12 @@ class SceneDelegate: UIViewController, UIWindowSceneDelegate, WKNavigationDelega
         // documentPicker.directoryURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
         // Present the document picker.
         selectedDirectory = ""
+        pickerSemaphore = DispatchSemaphore(value: 0)
         DispatchQueue.main.async {
             rootVC?.present(self.documentPicker, animated: true, completion: nil)
         }
-        while (selectedDirectory == "") { } // wait until a directory is selected, for Shortcuts.
+        pickerSemaphore?.wait() // wait until a directory is selected, for Shortcuts.
+        pickerSemaphore = nil
     }
     
     func pickFile() {
@@ -2036,12 +2040,17 @@ class SceneDelegate: UIViewController, UIWindowSceneDelegate, WKNavigationDelega
         // documentPicker.directoryURL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
         // Present the document picker.
         selectedDirectory = ""
+        pickerSemaphore = DispatchSemaphore(value: 0)
         DispatchQueue.main.async {
             rootVC?.present(self.documentPicker, animated: true, completion: nil)
         }
-        while (selectedDirectory == "") { } // wait until a directory is selected, for Shortcuts.
+        pickerSemaphore?.wait() // wait until a directory is selected, for Shortcuts.
+        pickerSemaphore = nil
     }
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        defer {
+             pickerSemaphore?.signal()
+        }
         // Present the Document View Controller for the first document that was picked.
         // If you support picking multiple items, make sure you handle them all.
         let newDirectory = urls[0]
