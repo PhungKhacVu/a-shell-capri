@@ -304,11 +304,6 @@ extension AppDelegate {
                 return
             }
         }
-        //  Then copy $APPDIR/forbidden_2023/2023 (files we cannot include in On-Demand Resources)s:
-        // Removed for 2024, TODO: remove the code before release
-        // if let forbidden = Bundle.main.resourceURL?.appendingPathComponent("forbidden_2023/2023") {
-            // copyContentsOfDirectory(at: forbidden, to: currenttl)
-        // }
         // If ~/Library/texlive/2019 still exists (unlikely, but...) keep its texmf-local directory
         let tl2019 = localURL.appendingPathComponent("2019")
         if (FileManager().fileExists(atPath: tl2019.path)) {
